@@ -53,41 +53,57 @@ int characterReplacement(string s, int k)
         min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
 
 
+
+        // Keep moving the left edge to the right until the window [left:right] has at most k+1 distinct characters
+        // Ensure that left does not exceed 
+        while ( (min_char_to_replace > k) && (left <= n-(k+1)) )   
+        {
+            // Remove the previous left element from the window
+            hash[s[left]-'A']--;
+            left++;
+
+            // Update the max_char_freq
+            max_char_freq = *max_element(hash.begin(), hash.end());
+            min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
+
+        }
+
         
-        // New distinct character discovered in the window
-        if (hash[s[right]-'A'] == 0)
-        {
-            // min_char_to_replace, i.e, the number of distinct characters in a substring/window cannot exceed k
-            // If after expanding the new right element in the window, max_char_freq will still be proper, then include the new element to the window
-            if ( (min_char_to_replace) <= k )
-            {
-            }
+        // // New distinct character discovered in the window
+        // if (hash[s[right]-'A'] == 0)
+        // {
+        //     // min_char_to_replace, i.e, the number of distinct characters in a substring/window cannot exceed k
+        //     // If after expanding the new right element in the window, max_char_freq will still be proper, then include the new element to the window
+        //     if ( (min_char_to_replace) <= k )
+        //     {
+        //     }
 
-            // If you cannot expand any more on the right with the current left edge, move the left edge to the right
-            else
-            {   
-                // Keep moving the left edge to the right until the window [left:right] has at most k+1 distinct characters
-                // Ensure that left does not exceed 
-                while ( (min_char_to_replace > k) && (left <= n-(k+1)) )   
-                {
-                    // Remove the previous left element from the window
-                    hash[s[left]-'A']--;
-                    left++;
+        //     // If you cannot expand any more on the right with the current left edge, move the left edge to the right
+        //     else
+        //     {   
+        //         // Keep moving the left edge to the right until the window [left:right] has at most k+1 distinct characters
+        //         // Ensure that left does not exceed 
+        //         while ( (min_char_to_replace > k) && (left <= n-(k+1)) )   
+        //         {
+        //             // Remove the previous left element from the window
+        //             hash[s[left]-'A']--;
+        //             left++;
 
-                    // Update the max_char_freq
-                    max_char_freq = *max_element(hash.begin(), hash.end());
-                    min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
+        //             // Update the max_char_freq
+        //             max_char_freq = *max_element(hash.begin(), hash.end());
+        //             min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
-        // s[right] element already exists in the window
-        else
-        {
-            // Do nothing, It will not cause any issues with the new window satisfying criteria
-        }
+        // // s[right] element already exists in the window
+        // else
+        // {
+        //     // Do nothing, It will not cause any issues with the new window satisfying criteria
+        // }
 
+        
         // Update the max_substring_length based on the new window size
         if ( (right-left+1) > max_substring_length )
         {
@@ -100,11 +116,11 @@ int characterReplacement(string s, int k)
 
 int main()
 {   
-    // string str = "ABAB";
-    // int k = 2;
+    string str = "ABAB";
+    int k = 2;
 
-    string str = "AABABBA";
-    int k = 1;
+    // string str = "AABABBA";
+    // int k = 1;
 
     int out = characterReplacement(str, k);
     cout << out << endl;
