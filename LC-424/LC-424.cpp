@@ -9,10 +9,10 @@ int characterReplacement(string s, int k)
 {
     int n = s.length();
 
-    // Start initially with a window-size = k+1, starting at left of s[]
+    // Start initially with a window-size of 1, with 1 element at the left of s[]
     int left = 0;   // left = 0 , left window edge
-    int right = k;  // right = k
-    int max_substring_length = k+1;     // Initialise the max values based on the first window
+    int right = -1;  // Right window edge: Starts at -1 because there is right++ in the beginning of the while loop
+    int max_substring_length = 0;     // The maximum length substring with repeating characters
 
     if (k==n || k==n-1) return n;    //Corner-Case: If k==n or k==n-1
 
@@ -20,20 +20,12 @@ int characterReplacement(string s, int k)
     int max_char_freq = 0;    // Frequency of the character with the maximum frequency in the window
     int min_char_to_replace = 0;    // Minimum number of characters to replace to make the window all the same letters = Window-size - character with maximum frequency
 
-    //First window operations: Hash the elements and find the max_char_freq and min_char_to_replace
-    for (int i=left; i <= right; i++)
-    {
-        // New distinct character discovered in the window, hash it and count it
-        hash[s[i]-'A']++;
-
-        // Update the max_char_freq
-        max_char_freq = *max_element(hash.begin(), hash.end());
-        min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
-    }
-
-    // Min subtring/window size is k+1. 
-    // Hence, the smallest possible substring will result when left = n-(k+1) and right = n-1. 
-    // For obvious reasons, no need to iterate for left beyond this point
+    /*
+    Exit-Case-2: left > n-(k+1)
+    Min subtring/window size is k+1 (Obvious reasons, make k characters same as the k+1 character). 
+    Hence, the smallest possible longest_repeating_substring will result when left = n-(k+1) and right = n-1. 
+    For obvious reasons, no need to iterate for left beyond this point, all these substrings will surely be smaller
+    */
     while (left <= n-(k+1))
     {
         right = right+1;  // Expand the window to the right 
@@ -48,7 +40,7 @@ int characterReplacement(string s, int k)
             return max_substring_length;
         }
 
-        // Update the hash and max_char_freq based on the expanded right element
+        // Update the hash and max_char_freq based on the expanded new right element
         hash[s[right]-'A']++;
         max_char_freq = *max_element(hash.begin(), hash.end());
         min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
@@ -69,7 +61,7 @@ int characterReplacement(string s, int k)
             min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
         }
 
-        // Update the max_substring_length based on the new window size
+        // Update the max_substring_length based on the current window 
         if ( (right-left+1) > max_substring_length )
         {
             max_substring_length = right - left + 1;
