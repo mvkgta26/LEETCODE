@@ -13,7 +13,6 @@ int characterReplacement(string s, int k)
     int left = 0;   // left = 0 , left window edge
     int right = k;  // right = k,
 
-    //unordered_map<char, int> hash;
     vector<int> hash(26,0);     // Constant size array to store the frequency of any upper-case character
 
     int max_char_freq = 0;    // Frequency of the character with the maximum frequency in the window
@@ -24,32 +23,22 @@ int characterReplacement(string s, int k)
     for (int i=left; i <= right; i++)
     {
         // New distinct character discovered in the window, hash it and count it
-        if (hash[s[i]-'A'] == 0)
-        {   
-            hash[s[i]-'A']++;
-            // max_char_freq++;
-            // Update the max_char_freq
-            max_char_freq = *max_element(hash.begin(), hash.end());
-            min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
+    
+        hash[s[i]-'A']++;
 
-
-            // Update the max_char_freq
-            // if ( (hash[s[i]] > max_char_freq) )   //(hash[s[i]] != 0) && 
-            // {
-            //     min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
-            // }
-
-        }
+        // Update the max_char_freq
+        max_char_freq = *max_element(hash.begin(), hash.end());
+        min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
+    
 
         // Previously discovered character
-        else
-        {
-            //do nothing
-        }
+        // else
+        // {
+        //     //do nothing
+        // }
     }
 
     // Initialise the max values based on the first window
-    // string max_substring = s.substr(0, k+1);
     int max_substring_length = k+1;
 
     // Min subtring/window size is k+1. 
@@ -73,13 +62,7 @@ int characterReplacement(string s, int k)
         max_char_freq = *max_element(hash.begin(), hash.end());
         min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
 
-        
-        // Update the max_char_freq based on the new right element
-        // if ( (hash[s[right]] > max_char_freq) )   //(hash[s[i]] != 0) && 
-        // {
-        //     max_char_freq = hash[s[right]];
-        //     min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
-        // }
+
         
         // New distinct character discovered in the window
         if (hash[s[right]-'A'] == 0)
@@ -88,8 +71,6 @@ int characterReplacement(string s, int k)
             // If after expanding the new right element in the window, max_char_freq will still be proper, then include the new element to the window
             if ( (min_char_to_replace) <= k+1 )
             {
-                // hash[s[right]]++;
-                //max_char_freq++;
             }
 
             // If you cannot expand any more on the right with the current left edge, move the left edge to the right
@@ -99,7 +80,6 @@ int characterReplacement(string s, int k)
                 // Ensure that left does not exceed 
                 while ( (min_char_to_replace > k) && (left <= n-(k+1)) )   
                 {
-
                     // Remove the previous left element from the window
                     hash[s[left]-'A']--;
                     left++;
@@ -108,13 +88,6 @@ int characterReplacement(string s, int k)
                     max_char_freq = *max_element(hash.begin(), hash.end());
                     min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
 
-
-                    // // If after removing the previous left edge element, there are no more of the s[left] elements in the new window, reduce the distinct character count
-                    // if (hash[left] == 0)
-                    // {
-                    //     max_char_freq--;
-                    // }
-
                 }
             }
         }
@@ -122,8 +95,7 @@ int characterReplacement(string s, int k)
         // s[right] element already exists in the window
         else
         {
-            // Do nothing
-            // It will not cause any issues with the new window satisfying criteria
+            // Do nothing, It will not cause any issues with the new window satisfying criteria
         }
 
         // Update the max_substring_length based on the new window size
