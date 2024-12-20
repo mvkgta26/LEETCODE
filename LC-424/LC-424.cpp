@@ -12,9 +12,9 @@ int characterReplacement(string s, int k)
     // Start initially with window-size = k+1
     int left = 0;   // left = 0 , left window edge
     int right = k;  // right = k,
+    int max_substring_length = k+1;     // Initialise the max values based on the first window
 
     vector<int> hash(26,0);     // Constant size array to store the frequency of any upper-case character
-
     int max_char_freq = 0;    // Frequency of the character with the maximum frequency in the window
     int min_char_to_replace = 0;    // Minimum number of characters to replace to make the window all the same letters
 
@@ -23,34 +23,23 @@ int characterReplacement(string s, int k)
     for (int i=left; i <= right; i++)
     {
         // New distinct character discovered in the window, hash it and count it
-    
         hash[s[i]-'A']++;
 
         // Update the max_char_freq
         max_char_freq = *max_element(hash.begin(), hash.end());
         min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
-    
-
-        // Previously discovered character
-        // else
-        // {
-        //     //do nothing
-        // }
     }
 
-    // Initialise the max values based on the first window
-    int max_substring_length = k+1;
-
     // Min subtring/window size is k+1. 
-    // Hence, when left = n-(k+1) and right = n-1, the smallest possible substring will result.
+    // Hence, the smallest possible substring will result when left = n-(k+1) and right = n-1. 
     // For obvious reasons, no need to iterate for left beyond this point
     while (left <= n-(k+1))
     {
         right = right+1;  // Expand the window to the right
         
-        // Corner Case: Expanded as much as possible to right with the current left
-        // This means [left:right=n-1] is the longest possible substring
-        // Return the maximum substring length
+        // Corner Case: Expanded till the right end with the current left
+        // This means [left:right=n-1] is the longest possible substring for current value of left or any larger value of left
+        // Return the maximum substring length, no need to iterate further
         if (right >= n)
         {
             return max_substring_length;
@@ -58,6 +47,7 @@ int characterReplacement(string s, int k)
 
         // Update the hash and max_char_freq for the new right element
         hash[s[right]-'A']++;
+
         // Update the max_char_freq
         max_char_freq = *max_element(hash.begin(), hash.end());
         min_char_to_replace = (right - left + 1) - max_char_freq;    // Window-size - max_char_freq will be least the number of characters to replace to make the window/substring all the same characters
@@ -67,9 +57,9 @@ int characterReplacement(string s, int k)
         // New distinct character discovered in the window
         if (hash[s[right]-'A'] == 0)
         {
-            // max_char_freq, i.e, the number of distinct characters in a substring/window cannot exceed k+1
+            // min_char_to_replace, i.e, the number of distinct characters in a substring/window cannot exceed k
             // If after expanding the new right element in the window, max_char_freq will still be proper, then include the new element to the window
-            if ( (min_char_to_replace) <= k+1 )
+            if ( (min_char_to_replace) <= k )
             {
             }
 
