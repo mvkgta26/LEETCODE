@@ -1,0 +1,7 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/krishna/Central/LC-Git/LEETCODE/LC-226/LC-226'
+relocations:
+  - { offset: 0x510E, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x15D21, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offset: 0x5277, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003E78, symSize: 0x34 }
+...
