@@ -27,20 +27,8 @@ map<int,int> inorder_hash_func(vector<int>& inorder)
     return inorder_hash;
 }
 
-map<int,int> preorder_hash_func(vector<int>& preorder)
+TreeNode* buildTreeHelper(vector<int>& preorder, vector<int>& inorder, map<int, int> &inorder_hash)
 {
-    map<int,int> preorder_hash;
-    for (int i=0; i<preorder.size(); i++)
-    {
-        preorder_hash[preorder[i]] = i;
-    }
-
-    return preorder_hash;
-}
-
-TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
-{
-
     // Exit Condition 1:
     if(preorder.size() == 1)
     {
@@ -51,16 +39,9 @@ TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
     }
 
 
-    // // Exit Condition 2:
-    // if (preorder.size() == 0)
-    // {
-    //     return nullptr;
-    // }
-
     int head_node_val = preorder[0];
     TreeNode* head_node = new TreeNode(head_node_val);
 
-    map<int, int> inorder_hash = inorder_hash_func(inorder);
 
     int left_subtree_length = inorder_hash[head_node_val];
 
@@ -99,6 +80,16 @@ TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
     head_node->right = right_subtree_head;
 
     return head_node;
+}
+
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
+{
+
+    map<int, int> inorder_hash = inorder_hash_func(inorder);
+
+    TreeNode* root = buildTreeHelper(preorder, inorder, inorder_hash);
+
+    return root;
 }
 
 int main()
