@@ -39,11 +39,11 @@ map<int,int> preorder_hash_func(vector<int>& preorder)
 
 TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
 {
-    // Exit Condition 1:
-    if (preorder.size() == 0)
-    {
-        return nullptr;
-    }
+    // // Exit Condition 1:
+    // if (preorder.size() == 0)
+    // {
+    //     return nullptr;
+    // }
 
     // Exit Condition 2:
     if(preorder.size() == 1)
@@ -60,22 +60,31 @@ TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
 
     int left_subtree_length = inorder_hash[head_node_val];
 
-    // Handle edges cases if there is only left or right subtree to the current head node (Asymmetry)
+
+    TreeNode* left_subtree_head = NULL;
+    TreeNode* right_subtree_head = NULL;
+
+    if (left_subtree_length == 0)  // Handle edges cases if there is only right subtree to the current head node (Asymmetry)
+        left_subtree_head = NULL;
+    
+    else
+    {    // Create preorder and inorder arrays for the left subtree. Build the left subtree and get the left subtree head.
+        vector<int> left_subtree_inorder (inorder.begin(), inorder.begin() + left_subtree_length);
+        vector<int> left_subtree_preorder (preorder.begin() + 1, preorder.begin() + left_subtree_length + 1);
+        left_subtree_head = buildTree(left_subtree_preorder, left_subtree_inorder);
+    }  
+
+    // Handle edges cases if there is only left subtree to the current head node (Asymmetry)
     if (left_subtree_length + 1 >= inorder.size())  // left subtree and the head node make up the whole inorder of the tree.
         right_subtree_head = NULL;
-
-    if (left_subtree_length == 0)
-        left_subtree_head = NULL;
-
-    // Create preorder and inorder arrays for the left subtree. Build the left subtree and get the left subtree head.
-    vector<int> left_subtree_inorder (inorder.begin(), inorder.begin() + left_subtree_length);
-    vector<int> left_subtree_preorder (preorder.begin() + 1, preorder.begin() + left_subtree_length + 1);
-    TreeNode* left_subtree_head = buildTree(left_subtree_preorder, left_subtree_inorder);
     
-    // Create the preorder and inorder arrays for the right subtree. Build the right subtree and get the right subtree head.
-    vector<int> right_subtree_inorder (inorder.begin() + left_subtree_length + 1, inorder.end());   // Middle/head_node + 1 --> right end 
-    vector<int> right_subtree_preorder (preorder.begin() + left_subtree_length + 1, preorder.end());    // The right subtree section
-    TreeNode* right_subtree_head = buildTree(right_subtree_preorder, right_subtree_inorder);
+    else
+    {    
+        // Create the preorder and inorder arrays for the right subtree. Build the right subtree and get the right subtree head.
+        vector<int> right_subtree_inorder (inorder.begin() + left_subtree_length + 1, inorder.end());   // Middle/head_node + 1 --> right end 
+        vector<int> right_subtree_preorder (preorder.begin() + left_subtree_length + 1, preorder.end());    // The right subtree section
+        TreeNode* right_subtree_head = buildTree(right_subtree_preorder, right_subtree_inorder);
+    }  
 
     // Attach the left and right subtree heads to the current head node.
     head_node.left = left_subtree_head;
