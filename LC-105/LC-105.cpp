@@ -27,24 +27,24 @@ map<int,int> inorder_hash_func(vector<int>& inorder)
 }
 
 /*
-The function is a recursive function that takes the inorder and preorder of a subtree,
-finds the head of this subtree, recursively builds left and right subtrees of this head, and attaches them to the head.
-Finally returns this head of the tree.
-in_start and in_end mark the boundaries (the start and end indices) within the inorder[] pertaiing to the current subtree in the resursive call
-Similarly pre_start and pre_end mark the boundaries within the preorder[] array
-Imagine as if you are passing only the preorder and inorder sub-arrays pertaining to the subtree for the current recursive call. But instead of passing the subarray itself, we pass the boundaries of the subarray within the original pre_order and in_order.
+    The function is a recursive function that takes the inorder and preorder of a subtree,
+    finds the head of this subtree, recursively builds left and right subtrees of this head, and attaches them to the head.
+    Finally returns this head of the tree.
+    in_start and in_end mark the boundaries (the start and end indices) within the inorder[] pertaiing to the current subtree in the resursive call
+    Similarly pre_start and pre_end mark the boundaries within the preorder[] array
+    Imagine as if you are passing only the preorder and inorder sub-arrays pertaining to the subtree for the current recursive call. But instead of passing the subarray itself, we pass the boundaries of the subarray within the original pre_order and in_order.
 */
 TreeNode* buildTreeHelper(vector<int>& preorder, int pre_start, int pre_end, vector<int>& inorder, int in_start, int in_end, map<int, int> &inorder_hash)
 {
-    // NOTE: You can do the same above 2 exit conditions check using in_start and in_end as well.
-    // Exit Condition 1: If there is only one element in the preorder array for the current subtree, then it is a leaf node
+    // NOTE: You can do the same below 2 exit conditions check using in_start and in_end as well.
+    // Exit Condition / Corner Case 1: If there is only one element in the preorder array for the current subtree, then it is a leaf node
     if(pre_start == pre_end)
     {
         TreeNode* node =  new TreeNode(preorder[pre_start]); // Create the leaf node with the value of the only element in the preorder array.
         return node;
     }
 
-    // Exit Condition 2: If there is no left/right child node for the previous head node. Return NULL
+    // Exit Condition / Corner Case 2: If there is no left/right child node for the previous head node. Return NULL
     if (pre_start > pre_end)
     {
         return NULL;
