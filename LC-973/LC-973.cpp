@@ -1,17 +1,20 @@
 #include <queue>
 #include <vector>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
 
-int calcDist(vector<int> coordinates)
+// Function to calculate the square of the distance and return it.
+// You dont actually need to do sqrt to compare distances. You can just compare the squares
+double calcDist(vector<int> coordinates)
 {
     int x = coordinates[0];
     int y = coordinates[1];
 
-    int sum = x*x + y*y;
-    int dist = sqrt(sum);
+    double sum = x*x + y*y;
+    // double dist = sum;
 
     return dist;
 }
@@ -24,8 +27,9 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k)
     // Here the first input: Element Type: {int, vector<>} pair
     // The second input : vector< pair<int, vector<int>> > mentions that the container used to implement the priority queue is a vector which holds our pairs
     // There is no third input here, because the default is taken as less<>, which will make the pqueue as a maxheap
-    priority_queue < pair< int, vector<int> >, 
-                    vector< pair<int, vector<int>> >
+    priority_queue < pair< double, vector<int> >, 
+                    vector< pair<double, vector<int>> >,
+                    less<>
                     > 
                     pque;
 
@@ -36,7 +40,7 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k)
     {
         vector<int> coordinate = points[i];
 
-        int dist = calcDist(coordinate);
+        double dist = calcDist(coordinate);
 
         pque.push({dist, coordinate});
         
@@ -47,19 +51,30 @@ vector<vector<int>> kClosest(vector<vector<int>>& points, int k)
         }
     }
     
-    // Empty the values from the priority queue into a vector
+    // Empty the values from the priority queue into a vector outputs[]
     while (!pque.empty())
     {
-        pair output = pque.top();
+        pair<double, vector<int>> output = pque.top();
         outputs.push_back(output.second);
+        pque.pop();
     }
     
     return outputs;
 }
 
-
 int main()
 {   
-       
+    vector<vector<int>> points = {{1,3},{-2,2}};
+
+    vector<vector<int>> outputs = kClosest(points, 1);
+
+    for (int i=0; i<outputs.size(); i++)
+    {
+        cout << outputs[i][0] << " ";
+        cout << outputs[i][1] << " ";
+        cout << "\n";
+    }
+
+
     return 1;
 }
