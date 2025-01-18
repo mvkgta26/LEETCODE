@@ -1,3 +1,6 @@
+// Algorithm: Use a max heap and maintain its size of k elements
+
+
 #include <queue>
 #include <vector>
 #include <iostream>
