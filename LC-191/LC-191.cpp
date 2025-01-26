@@ -2,6 +2,7 @@
 
 using namespace std;
 
+/*
 int hammingWeight(int n) 
 {
     int count = 0;
@@ -13,6 +14,22 @@ int hammingWeight(int n)
             count++;
         
         n = n >> 1;
+    }
+
+    return count;
+}
+*/
+
+
+int hammingWeight(int n) 
+{
+    int count = 0;
+
+    while( n!= 0 )
+    {
+        count++;
+        n = n & (n-1);   // n & (n-1) will set the least significant 1 to 0, leaving all other bits untouched
+        // n will become 0 when the last 1 in the number is set to 0
     }
 
     return count;
