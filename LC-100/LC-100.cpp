@@ -14,38 +14,25 @@ struct TreeNode {
 };
 
 
-bool recursionHelper(TreeNode* p, TreeNode* q)
+bool sameTreeHelper(TreeNode* p, TreeNode* q)
 {
-    // If we have reached the lead nodes in both the trees
+    // Exit Condition: If we have reached the leaf nodes in both the trees
     if (p == NULL && q == NULL)
     {
         return 1;
     }
 
-    else if ( (p == NULL && q != NULL) || (p != NULL && q == NULL) )
+    // Edge Case: Both the nodes are not NULL, but is just 1 of the nodes NULL ??
+    // Have we reached the leaf of one tree but not the other
+    else if ( p==NULL || q==NULL )      //else if ( (p == NULL && q != NULL) || (p != NULL && q == NULL) )
     {
         return 0;
     }
 
+    // If both the nodes have the same values, recursively check if the left and right subtrees of the current nodes are equal
     if (p->val == q->val)
-    {   
-        // Check if the left subtrees of both the tree nodes are equal
-        // if (recursionHelper(p->left, q->left))
-        // {
-        //     // Check if right subtree of the both the tree nodes are equal
-        //     if (recursionHelper(p->right, q->right))
-        //     {
-        //         return 1;
-        //     }
-        // }
-
-        // else 
-        // {
-        //     return 0;
-        // }
-
-
-        return ( recursionHelper(p->left, q->left) && recursionHelper(p->right, q->right) );
+    {
+        return ( sameTreeHelper(p->left, q->left) && sameTreeHelper(p->right, q->right) );
     }
 
     else
@@ -54,8 +41,8 @@ bool recursionHelper(TreeNode* p, TreeNode* q)
     }
 }
 
+
 bool isSameTree(TreeNode* p, TreeNode* q) 
 {
-
-        
+    return sameTreeHelper(p, q);  
 }
