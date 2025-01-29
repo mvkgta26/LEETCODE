@@ -16,10 +16,11 @@ struct TreeNode
      TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+vector<TreeNode*> all_subtree_roots_with_same_depth;
 
 int find_max_depth(TreeNode* root, int check_depth)
 {
-    vector<TreeNode*> all_subtree_roots_with_same_depth;
+
 
     // Recurrence relation:
         // The max_depth of a root {r = max [ max_depth(root->left), max_depth(root->right) ] + 1}
@@ -28,7 +29,7 @@ int find_max_depth(TreeNode* root, int check_depth)
     if (root == NULL)
         return -1;
     
-    int max_depth = max( find_max_depth(root->left), find_max_depth(root->right) ) + 1;
+    int max_depth = max( find_max_depth(root->left, check_depth), find_max_depth(root->right, check_depth) ) + 1;
 
     // The current root TreeNode* has the same max_depth as the subtree subroot
     // There is a chance that this subtree from this root could be the same as the subtree subroot
@@ -71,6 +72,19 @@ bool isSubtree(TreeNode* root, TreeNode* subRoot)
 
     int subRootDepth = find_max_depth(subRoot, -1);     // give check_depth a dummy value of -1, there is no need to check to check for subtree with given depth when finding the depth of the subtree
 
-    int mainTreedDepth = find_max_depth(root, subRootDepth); 
+    int mainTreedDepth = find_max_depth(root, subRootDepth);    // Recursively checks and stores all the subtrees in root tree that have the depth = subRootDepth
+
+    for (int i=0; i<all_subtree_roots_with_same_depth.size(); i++)
+    {
+        TreeNode* node_to_be_checked = all_subtree_roots_with_same_depth[i];
+        
+        if ( same_tree_helper( node_to_be_checked, subRoot ) )
+        {
+            return 1;
+        }
+    }
+
+    // All the nodes in the main tree with same depth as the subRoot subtree have been checked. No match found.
+    return 0;
 
 }
