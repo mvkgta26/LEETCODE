@@ -5,6 +5,22 @@
 
 using namespace std;
 
+/*
+    Notes:
+        The preorder travesal of a tree is unique to that tree, provided we also consider the NULL 
+        below nodes and add them to the preorder traversal too.
+
+        This fact can be made use of to find a different more complex, but faster solution to this problem.
+
+        Convert the main tree and the substree to its preorder notation and store them as a string.
+
+        Check if subtree string is a substring of main tree string.
+
+        This enables to this in O(m) + O(n) time, where m and n are the number of nodes in the 
+        main tree and subtree respectively. 
+*/
+
+
 
 struct TreeNode 
 {
