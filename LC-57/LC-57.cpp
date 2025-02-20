@@ -7,6 +7,14 @@ using namespace std;
 
 vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) 
 {
+
+    // Corner Case: If intervals[] is empty
+    if (intervals.size() == 0)
+    {
+        intervals.push_back(newInterval);
+        return intervals;
+    }
+
     int new_left = newInterval[0];
     int new_right = newInterval[1];
 
