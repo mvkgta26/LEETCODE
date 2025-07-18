@@ -1,3 +1,21 @@
+/*
+	Algorithm:
+		1. Iterate all the blocks of the grid one by one
+			2. If the block is an 'unvisited' land, perform a DFS of all the univisited lands connected to this block. The DFS will traverse <ALL> the connected land elements (hence all elements of the island to which this block belongs to). 
+				2.1. Count the number of blocks in the island as the DFS is performed.
+			3. Find the max of all such island areas calculated at each DFS.
+
+	How to mark visited land blocks??
+		Method 1: Maintain a visited array of size m*n
+		Method 2: Just make the grid element to 0 (mark it as water) once it is visited and counted.
+
+		Why would method 2 work??
+			When you encounter a land block of an island (The top-left most land of any island): You performs DFS to all the elements in the island the block is in.
+			When you do this DFS, you mark/change all this land in this island as water, and count them for the island.
+			Later, when you iterate through the grid, even when you come across this block, you will not perform a DFS or count it as land since it is marked as water.
+			This way the lands in each island is just counted once.
+*/
+
 #include <stdio.h>
 #include <iostream>
 #include <vector>
@@ -49,8 +67,8 @@ int maxAreaOfIsland(vector<vector<int>>& grid)
 	
 	return max_island_area;
 }
-
-
+	
+	
 int main()
 { 
 	cout << "Hello";
