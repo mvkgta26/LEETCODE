@@ -1,3 +1,20 @@
+/*
+	Essential Data Structure:
+		Maintain a hash table that maps each node value to the address of the clone-node with that value.
+
+	Algorithm:
+		Perform BFS on the nodes of the graph
+			When processing each node of the graph:
+				Obtain the clone of that node from the hash table
+				Iterate all the neighbors of each node:
+					If neighbor already visited, take the neighbor's clone-node from the hash
+					If neighbor is not already visited: create a new clone-node of the neighbor, add a new hash entry for this neighbor clone-node 
+				Add the clones of all the neighbors of the current node to a list and Attach it to the current clone node
+				
+	Proof:
+		You can use loop invariant to understand. A rough understanding should be enough, mostly you can just understand intuitively.
+*/
+
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -23,18 +40,28 @@ public:
 	}
 };
 
+
+
+// 
 Node* cloneGraph(Node* node) 
 {
+	// Corner Case. There ain't no graph.
+	if (node == NULL)
+	{
+		return NULL;
+	}
+	
 	// Create bfs queue and push the node 1 to que front. Also create visited array.
 	queue<Node*> bfs_que;
 	bfs_que.push(node);
-	vector<int> visited(100, 0);	// There are maximum 100 unique nodes in the graph, based on the question specifications
+	vector<int> visited(101, 0);	// There are maximum 101 unique nodes in the graph, from 0-100, based on the question specifications
 	map<int, Node*> copy_node_hash;	// Hash table that hashes the value of each clone node to its address
 	
 	// Create the head node 1 of the clone graph. Hash its value to its address.
 	Node* clone_graph_head_node = new Node(node->val);
 	copy_node_hash[clone_graph_head_node->val] = clone_graph_head_node;
 	
+	visited[node->val] = 1; // Mark the head node as visited
 	
 	// BFS
 	Node* curr_node;
@@ -44,7 +71,6 @@ Node* cloneGraph(Node* node)
 		// Pop Que Front
 		curr_node = bfs_que.front();
 		bfs_que.pop();
-		visited[curr_node->val] = 1;	// Mark current node as visited
 		
 		// Get the address of the copy node corresponding to this node value 
 		Node* copy_node = copy_node_hash[curr_node->val];
@@ -60,23 +86,22 @@ Node* cloneGraph(Node* node)
 			if (visited[curr_neighbors[i]->val] == 0)	
 			{
 				bfs_que.push(curr_neighbors[i]);
+				visited[curr_neighbors[i]->val] = 1;	// Mark current neighbor node as visited
 				
-				// Create clone of the neighbor node. Hash the clone neighbor node.
+				// If unvisited neighbor, Create clone of the neighbor node. Hash the clone neighbor node.
 				copy_nbr_node = new Node(curr_neighbors[i]->val);
-				nbrs_arr_clone.push_back(copy_nbr_node);
+				copy_node_hash[copy_nbr_node->val] = copy_nbr_node;	// Hash
 			}
 			
-			// If neighbor is already visited, take its address from the hash table
-			else
-			{
-				copy_nbr_node = copy_node_hash[curr_neighbors[i]->val];
-			}
+			// Take the neighbor's address from the hash table
+			copy_nbr_node = copy_node_hash[curr_neighbors[i]->val];
 			
-			// Add the neighbor to the clone node neighbors list, irrespective of if it is already visited.
+			// Add the neighbor to the copy-node's neighbors list, irrespective of if it is already visited.
 			nbrs_arr_clone.push_back(copy_nbr_node);
 		}
 		
 		copy_node->neighbors = nbrs_arr_clone;	// Attach the clone neighbors to the clone node
+		nbrs_arr_clone.clear(); // Clear the neighbors array for the iteration of the next node
 	}
 	
 	
