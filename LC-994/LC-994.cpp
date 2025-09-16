@@ -32,15 +32,15 @@ int orangesRotting(vector<vector<int>>& grid)
 				struct rotten_cell temp_cell;
 				temp_cell.x=i;
 				temp_cell.y=j;
-				temp_cell.rotten_minute = 0;  // Initial rotten oranges start at minute 0
+				//temp_cell.rotten_minute 
 				
 				bfs_que.push(temp_cell);
 			}
 		}
 	}
 	
-	//------Perform BFS------
-	int max_rot_min = -1;		// Will hold the minute in which all the oranges are done rotting.
+	//------Perform MULTI-SOURCE BFS------
+	int max_rot_min = 0;		// Will hold the minute in which all the oranges are done rotting. NOTE: Ensure that this has to be 0, this will help in returning in corner case (When there are no oranges in the grid. Just 0 in grid.)
 	
 	while (!bfs_que.empty())
 	{
@@ -53,63 +53,74 @@ int orangesRotting(vector<vector<int>>& grid)
 		
 		//Mark curr_node as visited
 		max_rot_min = max(max_rot_min, curr_node.rotten_minute);	// To hold the highest rotting minute among all the nodes that are visited in BFS
-		visited[x_curr][y_curr] = 1;
 		
 		//Expand rot to neighbors
 		
-		// Left neighbor. Check if left neighbor is: within bounds, not already visited, and if it is fresh.
+		// Up neighbor. Check if left neighbor is: within bounds, not already visited, and if it is fresh.
 		if ( (x_curr-1 >= 0) && (visited[x_curr-1][y_curr] != 1) && (grid[x_curr-1][y_curr] == 1) )
 		{
 			struct rotten_cell temp_node;
 			temp_node.x = x_curr-1;
 			temp_node.y = y_curr;
+			
+			grid[temp_node.x][temp_node.y] = 2;  // Mark the neighbor as rotted
 			temp_node.rotten_minute = curr_node.rotten_minute + 1;	// *Increase the rot minute for the neighbor. It will be rotten in the next minute in which the current node rotted.	
 		
 			bfs_que.push(temp_node);	// Push the neighbor with its parameters set.
+			visited[temp_node.x][temp_node.y] = 1;	// Mark the neighbor as visited
 		}
 		
-		// Right neighbor. Check if right neighbor is: within bounds, not already visited, and if it is fresh.
-		if ( (x_curr+1 <= n-1) && (visited[x_curr+1][y_curr] != 1) && (grid[x_curr+1][y_curr] == 1) )
+		// Down neighbor. Check if right neighbor is: within bounds, not already visited, and if it is fresh.
+		if ( (x_curr+1 <= m-1) && (visited[x_curr+1][y_curr] != 1) && (grid[x_curr+1][y_curr] == 1) )
 		{
 			struct rotten_cell temp_node;
 			temp_node.x = x_curr+1;
 			temp_node.y = y_curr;
+			
+			grid[temp_node.x][temp_node.y] = 2;  // Mark the neighbor as rotted
 			temp_node.rotten_minute = curr_node.rotten_minute + 1;	// *Increase the rot minute for the neighbor. It will be rotten in the next minute in which the current node rotted.	
 		
 			bfs_que.push(temp_node);	// Push the neighbor with its parameters set.
+			visited[temp_node.x][temp_node.y] = 1;	// Mark the neighbor as visited
 		}
 		
-		// Down neighbor. Check if down neighbor is: within bounds, not already visited, and if it is fresh.
+		// Left neighbor. Check if down neighbor is: within bounds, not already visited, and if it is fresh.
 		if ( (y_curr-1 >= 0) && (visited[x_curr][y_curr-1] != 1) && (grid[x_curr][y_curr-1] == 1) )
 		{
 			struct rotten_cell temp_node;
 			temp_node.x = x_curr;
 			temp_node.y = y_curr-1;
+			
+			grid[temp_node.x][temp_node.y] = 2;  // Mark the neighbor as rotted
 			temp_node.rotten_minute = curr_node.rotten_minute + 1;	// *Increase the rot minute for the neighbor. It will be rotten in the next minute in which the current node rotted.	
 		
 			bfs_que.push(temp_node);	// Push the neighbor with its parameters set.
+			visited[temp_node.x][temp_node.y] = 1;	// Mark the neighbor as visited
 		}
 		
-		// Up neighbor. Check if up neighbor is: within bounds, not already visited, and if it is fresh.
-		if ( (y_curr+1 <= m-1) && (visited[x_curr][y_curr+1] != 1) && (grid[x_curr][y_curr+1] == 1) )
+		// Right neighbor. Check if up neighbor is: within bounds, not already visited, and if it is fresh.
+		if ( (y_curr+1 <= n-1) && (visited[x_curr][y_curr+1] != 1) && (grid[x_curr][y_curr+1] == 1) )
 		{
 			struct rotten_cell temp_node;
 			temp_node.x = x_curr;
 			temp_node.y = y_curr+1;
+			
+			grid[temp_node.x][temp_node.y] = 2;  // Mark the neighbor as rotted
 			temp_node.rotten_minute = curr_node.rotten_minute + 1;	// *Increase the rot minute for the neighbor. It will be rotten in the next minute in which the current node rotted.	
 		
 			bfs_que.push(temp_node);	// Push the neighbor with its parameters set.
+			visited[temp_node.x][temp_node.y] = 1;	// Mark the neighbor as visited
 		}	
 	}
 	
-	// Check if there are any fresh oranges left that were not rotten till the end
+	// Check if there are any fresh oranges left that were not infected till the end
 	for (int i=0; i<m; i++)
 	{
 		for (int j=0; j<n; j++)
 		{
 			if (grid[i][j] == 1)
 			{
-				return -1;
+				return -1;  // Fresh orange that was never reached by any rotten orange
 			}
 		}
 	}
