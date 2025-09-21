@@ -12,7 +12,7 @@
 				Add the clones of all the neighbors of the current node to a list and Attach it to the current clone node
 				
 	Proof:
-		You can use loop invariant to understand. A rough understanding should be enough, mostly you can just understand intuitively.
+		You can use loop invariant to understand. A rough understanding should be enough, mostly you can just understand intuitively.`
 */
 
 #include <iostream>
