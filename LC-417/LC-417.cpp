@@ -129,63 +129,27 @@ int dfs_check_ocean_reachable(vector<vector<int>>& heights, int i, int j, int& m
 	
 	// ******** Recursive DFS calls *********
 		// **** DFS call on the lower cell ****
-		if ((i+1 < m))
+		if ((i+1 < m) && visited[i+1][j] == 0)
 		{	
-			if (visited[i+1][j] == 0)
-			{
-				dfs_check_ocean_reachable(heights, i+1, j, m, n, visited, reaches_pacific, reaches_atlantic);
-			}
-			
-			if ( heights[i+1][j] <= heights[i][j] )
-			{
-				reaches_pacific[i][j] = reaches_pacific[i][j] || reaches_pacific[i+1][j];
-				reaches_atlantic[i][j] = reaches_atlantic[i][j] || reaches_atlantic[i+1][j];
-			}
+			dfs_check_ocean_reachable(heights, i+1, j, m, n, visited, reaches_pacific, reaches_atlantic);
 		}
 		
 		// **** DFS call on the upper cell ****
-		if ((i-1 >= 0))
+		if ((i-1 >= 0) && visited[i-1][j] == 0)
 		{
-			if (visited[i-1][j] == 0)
-			{
-				dfs_check_ocean_reachable(heights, i-1, j, m, n, visited, reaches_pacific, reaches_atlantic);
-			}
-			
-			if ( heights[i-1][j] <= heights[i][j] )
-			{
-				reaches_pacific[i][j] = reaches_pacific[i][j] || reaches_pacific[i-1][j];
-				reaches_atlantic[i][j] = reaches_atlantic[i][j] || reaches_atlantic[i-1][j];
-			}
+			dfs_check_ocean_reachable(heights, i-1, j, m, n, visited, reaches_pacific, reaches_atlantic);
 		}	
 		
 		//  **** DFS call on the right cell ****
-		if ( (j+1 < n) )
+		if ((j+1 < n) && visited[i][j+1] == 0)
 		{
-			if (visited[i][j+1] == 0)
-			{
-				dfs_check_ocean_reachable(heights, i, j+1, m, n, visited, reaches_pacific, reaches_atlantic);
-			}
-			
-			if ( heights[i][j+1] <= heights[i][j] )
-			{
-				reaches_pacific[i][j] = reaches_pacific[i][j] || reaches_pacific[i][j+1];
-				reaches_atlantic[i][j] = reaches_atlantic[i][j] || reaches_atlantic[i][j+1];
-			}
+			dfs_check_ocean_reachable(heights, i, j+1, m, n, visited, reaches_pacific, reaches_atlantic);
 		}
 		
 		//  **** DFS call on the left cell ****
-		if ( (j-1 >= 0) )
+		if ((j-1 >= 0) && visited[i][j-1] == 0)
 		{
-			if (visited[i][j-1] == 0)
-			{
-				dfs_check_ocean_reachable(heights, i, j-1, m, n, visited, reaches_pacific, reaches_atlantic);
-			}
-			
-			if ( heights[i][j-1] <= heights[i][j] )
-			{
-				reaches_pacific[i][j] = reaches_pacific[i][j] || reaches_pacific[i][j-1];
-				reaches_atlantic[i][j] = reaches_atlantic[i][j] || reaches_atlantic[i][j-1];
-			}	
+			dfs_check_ocean_reachable(heights, i, j-1, m, n, visited, reaches_pacific, reaches_atlantic);
 		}
 
 	return 0;
