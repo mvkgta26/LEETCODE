@@ -140,74 +140,69 @@ int dfs_check_ocean_reachable( vector<vector<int>>& heights, int i, int j, int& 
 {
 	reaches_ocean[i][j] = 1;	// Mark the current land-cell as reachable fron the current ocean
 	
-	// ******** Recursive DFS calls *********
-		// **** DFS call on the lower cell ****
-		// Check if it is higher and is not already visited by the current ocean. Also check edge case.
-		if ((i+1 < m) && ( heights[i+1][j] >= heights[i][j] ) && reaches_ocean[i+1][j] == 0)
-		{	
-			dfs_check_ocean_reachable(heights, i+1, j, m, n, reaches_ocean);
-		}
-		
-		//  **** DFS call on the left cell ****
-		// Check if it is higher and is not already visited by the current ocean. Also check edge case.
-		if ((j-1 >= 0) && ( heights[i][j-1] >= heights[i][j] ) && reaches_ocean[i][j-1] == 0)
-		{
-			dfs_check_ocean_reachable(heights, i, j-1, m, n, reaches_ocean);
-		}
-		
-		//  **** DFS call on the upper cell ****
-		// Check if it is higher and is not already visited by the current ocean. Also check edge case.
-		if ((i-1 >= 0) && ( heights[i-1][j] >= heights[i][j] ) && reaches_ocean[i-1][j] == 0)
-		{
-			dfs_check_ocean_reachable(heights, i-1, j, m, n, reaches_ocean);
-		}
-				
-		//  **** DFS call on the right cell ****
-		// Check if it is higher and is not already visited by the current ocean. Also check edge case.
-		if ((j+1 < n) && ( heights[i][j+1] >= heights[i][j] ) && reaches_ocean[i][j+1] == 0)
-		{
-			dfs_check_ocean_reachable(heights, i, j+1, m, n, reaches_ocean);
-		}
+	// **** DFS call on the lower cell ****
+	// Check if it is higher and is not already visited by the current ocean. Also check edge case.
+	if ((i+1 < m) && ( heights[i+1][j] >= heights[i][j] ) && reaches_ocean[i+1][j] == 0)
+	{	
+		dfs_check_ocean_reachable(heights, i+1, j, m, n, reaches_ocean);
+	}
+	
+	//  **** DFS call on the left cell ****
+	// Check if it is higher and is not already visited by the current ocean. Also check edge case.
+	if ((j-1 >= 0) && ( heights[i][j-1] >= heights[i][j] ) && reaches_ocean[i][j-1] == 0)
+	{
+		dfs_check_ocean_reachable(heights, i, j-1, m, n, reaches_ocean);
+	}
+	
+	//  **** DFS call on the upper cell ****
+	// Check if it is higher and is not already visited by the current ocean. Also check edge case.
+	if ((i-1 >= 0) && ( heights[i-1][j] >= heights[i][j] ) && reaches_ocean[i-1][j] == 0)
+	{
+		dfs_check_ocean_reachable(heights, i-1, j, m, n, reaches_ocean);
+	}
+			
+	//  **** DFS call on the right cell ****
+	// Check if it is higher and is not already visited by the current ocean. Also check edge case.
+	if ((j+1 < n) && ( heights[i][j+1] >= heights[i][j] ) && reaches_ocean[i][j+1] == 0)
+	{
+		dfs_check_ocean_reachable(heights, i, j+1, m, n, reaches_ocean);
+	}
 		
 	return 0;
 }
 
 vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) 
 {
-	int m = heights.size();	// Number of rows
-	int n = heights[0].size(); // Number of columns
+	int m = heights.size();		// Number of rows
+	int n = heights[0].size(); 		// Number of columns
 		
 	// Create hash maps to mark if a cell can reach pacific and atlantic oceans.
 	vector<vector<bool>> reaches_pacific(m, vector<bool>(n, 0));
 	vector<vector<bool>> reaches_atlantic(m, vector<bool>(n, 0));
 	
-	int i, j;
-	// Iterate Upper wall to the pacific ocean 
-	i = 0;
+	
+	// Iterate upper border to the pacific ocean 
 	for (int j=0; j<n; j++)
 	{	
-		dfs_check_ocean_reachable(heights, i, j, m, n, reaches_pacific);
+		dfs_check_ocean_reachable(heights, 0, j, m, n, reaches_pacific);	// i = 0;
 	}
 	
-	// Iterate Left wall to the pacific ocean
-	j = 0;
+	// Iterate left border to the pacific ocean
 	for (int i=0; i<m; i++)
 	{	
-		dfs_check_ocean_reachable(heights, i, j, m, n, reaches_pacific);
+		dfs_check_ocean_reachable(heights, i, 0, m, n, reaches_pacific);	// j = 0;
 	}
 	
-	// Iterate lower wall to the atlantic ocean 
-	i = m-1;
+	// Iterate lower border to the atlantic ocean 
 	for (int j=0; j<n; j++)
 	{	
-		dfs_check_ocean_reachable(heights, i, j, m, n, reaches_atlantic);
+		dfs_check_ocean_reachable(heights, m-1, j, m, n, reaches_atlantic);		// i = m-1;
 	}
 		
-	// Iterate right wall to the atlantic ocean 
-	j = n-1;
+	// Iterate right border to the atlantic ocean 
 	for (int i=0; i<m; i++)
 	{	
-		dfs_check_ocean_reachable(heights, i, j, m, n, reaches_atlantic);
+		dfs_check_ocean_reachable(heights, i, n-1, m, n, reaches_atlantic);		// j = n-1;
 	}
 
 	
