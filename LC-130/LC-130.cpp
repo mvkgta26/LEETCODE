@@ -11,14 +11,14 @@ struct cooordinates
 };
 
 // Perform BFS with source cell (i,j)
-void BFS(vector<vector<char>>& board, vector<vector<int>>& visited, int i, int j, int surrounded_region)
+void BFS(vector<vector<char>>& board, vector<vector<int>>& visited, int i_source, int j_source, int surrounded_region)
 {
 	int m = board.size();	// Num rows
 	int n = board[0].size();	// Num cols
 	
 	// Push source cell coordinates to the BFS-Q
 	queue<cooordinates> bfs_q;
-	cooordinates source_coord = {i,j};	
+	cooordinates source_coord = {i_source, j_source};	
 	bfs_q.push(source_coord);
 	
 	
@@ -63,7 +63,6 @@ void BFS(vector<vector<char>>& board, vector<vector<int>>& visited, int i, int j
 		}
 		
 	}
-	
 }
 
 void solve(vector<vector<char>>& board) 
@@ -88,19 +87,19 @@ void solve(vector<vector<char>>& board)
 	for (j=0; j<n; j++)
 	{
 		// If it is an unvisited land cell, perform a BFS from that land-cell to visit all the land-cells in its corresponding region
-		if ((visited[0][j] != 0) && (board[0][j] == 'O'))
+		if ((visited[0][j] == 0) && (board[0][j] == 'O'))
 		{
-			BFS(board, visited, i, j, surrounded_region);
+			BFS(board, visited, 0, j, surrounded_region);
 		}
 	}
 	
-	// Lower Border
+	// Bottom Border
 	for (j=0; j<n; j++)
 	{
 		// If it is an unvisited land cell, perform a BFS from that land-cell to visit all the land-cells in its corresponding region
-		if ((visited[m-1][j] != 0) && (board[m-1][j] == 'O'))
+		if ((visited[m-1][j] == 0) && (board[m-1][j] == 'O'))
 		{
-			BFS(board, visited, i, j, surrounded_region);
+			BFS(board, visited, m-1, j, surrounded_region);
 		}
 	}
 	
@@ -108,9 +107,9 @@ void solve(vector<vector<char>>& board)
 	for (i=0; i<m; i++)
 	{
 		// If it is an unvisited land cell, perform a BFS from that land-cell to visit all the land-cells in its corresponding region
-		if ((visited[i][0] != 0) && (board[i][0] == 'O'))
+		if ((visited[i][0] == 0) && (board[i][0] == 'O'))
 		{
-			BFS(board, visited, i, j, surrounded_region);
+			BFS(board, visited, i, 0, surrounded_region);
 		}
 	}
 	
@@ -119,9 +118,9 @@ void solve(vector<vector<char>>& board)
 	for (i=0; i<m; i++)
 	{
 		// If it is an unvisited land cell, perform a BFS from that land-cell to visit all the land-cells in its corresponding region
-		if ((visited[i][n-1] != 0) && (board[i][n-1] == 'O'))
+		if ((visited[i][n-1] == 0) && (board[i][n-1] == 'O'))
 		{
-			BFS(board, visited, i, j, surrounded_region);
+			BFS(board, visited, i, n-1, surrounded_region);
 		}
 	}
 	
@@ -133,13 +132,12 @@ void solve(vector<vector<char>>& board)
 	{
 		for (j=0; j<n; j++)
 		{
-			if ((visited[i][j] != 0) && (board[i][j] == 'O'))
+			if ((visited[i][j] == 0) && (board[i][j] == 'O'))
 			{
 				BFS(board, visited, i, j, surrounded_region);
 			}
 		}
 	}
-	
 }
 
 int main()
