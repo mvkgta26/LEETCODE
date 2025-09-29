@@ -1,3 +1,21 @@
+/*
+	SEE ONENOTE FOR THEORY
+	Algorithm:
+		1. Iterate all the border cells. Find border cells that are land ('O')
+			a. Perform BFS with each of these border land cells as source. For each BFS, you will iterate all the cells of the region (unsurrounded region) that the border-cell belongs to.
+			b. Mark all these cells in these BFS traversals as UNSURROUNDED (Change 'O' to '#' in-place as a way of indication)
+		2. Iterate through the grid again, and change all the 'O' to 'X'. (All these cells surely belong to a surrounding region (see claim-3) ).
+			a. Also change '#' back to 'O' to make it compliant for output.
+
+
+
+	Data Structures:
+		You can use just one visited array for all the BFS traversals. (Claim-1).
+		But you don’t even need visited array here:  You can just change 'O' to '#' in-place in the grid to mark it as an UNSURROUNDED REGION during the BFS from border cells.
+		Queue of coordinate structs for BFS queue
+*/
+
+
 #include <stdio.h>
 #include <vector>
 #include <queue>
