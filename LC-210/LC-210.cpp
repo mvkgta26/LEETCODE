@@ -59,7 +59,7 @@ vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites)
 			}
 		}
 		
-		// If cycle detected, no top sort possible, return empty
+		// If cycle detected, no top sort possible, return empty.
 		if (cycle_detect_flag == 1)
 		{
 			return {};
