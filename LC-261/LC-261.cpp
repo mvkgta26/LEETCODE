@@ -40,7 +40,7 @@ bool dfs_helper(int node, int prev_node, vector<vector<int>> &adj_list, map<int,
 bool validTree(int n, vector<vector<int>>& edges) 
 {
 	// Create adjacency list from the edges list
-	vector<vector<int>> adj_list;
+	vector<vector<int>> adj_list(n);	// One list for each of the n nodes
 	
 	for (int i=0; i<edges.size(); i++)
 	{
@@ -103,7 +103,7 @@ int main()
 	
 	int out = validTree(n, edges);
 	
-	cout << "The answer is: " << out;
+	cout << "The answer is: " << out << endl;
 	
 	return 0;
 }
