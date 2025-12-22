@@ -1,5 +1,28 @@
-// A tree is an unidrected graph that is Connected and Acyclic
+/*
+	// A tree is an unidrected graph that is Connected and Acyclic
 
+	
+	Data Structures: 
+		HASH-MAP: visited[n]
+			If visited[i] == 1, if node i is already visited in DFS traversal. DFS call has already been made to that node.
+		
+		adj_list: adjacency list of the graph, converted from edges[] array given as input
+		
+		
+	DFS Based Algorithm: 
+			Start with node 0 as source and perform DFS
+			
+			With each node, perform DFS calls on all its neighbors (except the parent node obviously)
+				Cycle Detection (**NO PROOF**): Check if this new node HAS ALREADY been VISITED in DFS. If it has already been visited, that MEANS A CYCLE IS DETECTED. Return FALSE, GRAPH NOT A TREE
+			
+		After the DFS traversal is complete:
+			If the DFS traveral is fully complete without returning False, that means there is no cycle detected. 
+			Check for connected graph:
+				Count the number of visited nodes. If all the n nodes are visited in the DFS: It is CONNECTED. 
+				Otherwise, not connected, return False.
+			
+		If there is no cycle detected, and the graph is connected: Then it is a tree. Return True.
+*/
 
 #include <vector>
 #include <map>
@@ -9,7 +32,7 @@ using namespace std;
 
 // Performs dfs from the node 'node'. Traverses all the nodes connected to 'node', except the parent node 'prev_node'
 // Returns False if any cycle is detected in this DFS. Return True otherwise.
-bool dfs_helper(int node, int prev_node, vector<vector<int>> &adj_list, map<int,int>& visited)
+bool dfs_helper(int node, int prev_node, vector<vector<int>> &adj_list, vector<int>& visited)
 {
 	visited[node] = 1;
 	int out = 1;
@@ -48,15 +71,11 @@ bool validTree(int n, vector<vector<int>>& edges)
 		adj_list[edges[i][1]].push_back(edges[i][0]);
 	}
 	
-	// Create and initialize visited structure
+	// Create and initialize visited structure: vector position based hash
 	// visited[i] means that the node i is visited
-	map<int, int> visited;
-	for (int i=0; i<n; i++)
-	{
-		visited[i] = 0;
-	}
+	vector<int> visited(n, 0);
 	
-	// Make dfs call with 0 as node. Use dummy node -1 as previous node
+	// Make DFS call with 0 as node. Use dummy node -1 as previous node
 	int out = 1;
 	int prev_node = -1; // Dummy previous node for node 0
 	int node = 0;	// DFS source as 0
