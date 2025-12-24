@@ -3,6 +3,7 @@
         "tuple": "cpp",
         "vector": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "map": "cpp"
     }
 }
