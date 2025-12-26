@@ -4,6 +4,7 @@
         "vector": "cpp",
         "queue": "cpp",
         "stack": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "__node_handle": "cpp"
     }
 }

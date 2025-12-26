@@ -1,3 +1,15 @@
+/*
+	Algorithm:
+		Iterate all the nodes of the graph
+		Once you encounter the unvisited node i of a graph: 
+			Peform a BFS with this vertex - i as source
+			Once this BFS is completed, all the nodes in the connected component 'i' belongs will be marked as visited
+		Continue iterating the nodes of the graph. 
+			If you again encounter an unvisited vertex, that means it belongs to a new undiscovered connected component.
+			Count this new connected component, and call BFS with this vertex as source to mark all the vertices in this connected component as visited
+		Repeat this till all the nodes in the graph are iterated	
+*/
+
 #include <iostream>
 #include <vector>
 #include <queue>
