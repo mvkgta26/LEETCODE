@@ -82,7 +82,7 @@ int minMeetingRooms(vector<Interval>& intervals)
 		}
 	}
 	
-	// Count left over end times that were not counted, because the loop ended
+	// Count left over end times that were not counted, because the loop ended. THIS DOES NOT ACTUALLY SERVE ANY PURPOSE, JUST FOR LOGICAL COHERENCE
 	num_of_conccurent_meetings = num_of_conccurent_meetings - (n - end_pointer);
 	
 	
