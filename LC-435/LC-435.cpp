@@ -1,3 +1,19 @@
+/*
+	Refer OneNote for full detailed notes
+	
+	Algorithm:
+		Greedy algorithm: Finding the optimal intervals set: 
+			EFF (Earliest Finish First)
+
+		Optimal[]: Array with the optimal output intervals (Maximum number of non conflicting intervals)
+			>> Among all the intervals, choose the interval with the next lowest finish time, 
+				and whose start time does not conflict with the start time of the current last interval in the optimal[] array. 
+				Add this interval to the optimal[] array.
+			>> If the interval with the next lowest finish time, conflicts with the current last interval in the optimal[] array, then SKIP THAT INTERVAL. 
+				It is not part of the Optimal[] array.
+*/
+
+
 #include <vector>
 
 using namespace std;
