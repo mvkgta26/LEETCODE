@@ -1,25 +1,30 @@
-	// For temperatures[i] :
-	// Find closest index 'j' to the right with higher temperature than	temperatures[i]
-	// output[i] = j - i
-	// output[i] = 0, if j overflows
-	
-	
-	// Montonic Stack: The stack should only have elements in decreasing order
-	// When you push temperatures[i], pop all the elements in stack that have smaller value than temperatures[i]
-		// When popping each of these elements, calculate the difference between i and their index. This will be the output for the element temperatures[i]
-	
-	// Iterate all the elements in temperatures[] from left to right. 
-	// The element that is popped temperatures[j].
-	// The element that caused it to be popped temperatures[i].
-	// i is the closest rightward element to j, such that temperatures[i] > temperatures[j]
-		// How ?? Proof by contradiction
-	// If after all the iterations, there are some elements left, these have no solution. Make their solution as 0.
-	
-
-	
 /*
-	
+Refer one note for diagram 
 
+	What should we calculate?
+		For element i: Find closest index 'j' to the right with higher temperature than	temperatures[i]
+						output[i] = j - i
+						output[i] = 0, if j overflows
+
+	Algorithm:
+		Iterate the indices in temperatures[]
+			Check if there are elements in the stack that are smaller than temperatures[i]
+				If yes: Pop all the indices of these smaller elements from the stack: j. Calculate the outputs for these indices (i-j) and place then in the outputs[j]
+			Push index i to stack
+		The stack will still have indices left. 
+			These are elements that have no larger elements to their right in the array
+			Pop all these elements. Calculate the outputs for these indices (j-i) and place then in the outputs[] array
+
+	Claim:
+		Let the element that is popped from stack: temperatures[j].
+		Let the element that caused it to be popped temperatures[i].
+		i is the closest element to the right of j, such that temperatures[i] > temperatures[j]
+		How: Proof: If there was another element closer to j (between j and i), it would have already caused i to be popped in a previous iteration. But since 'i' is not popped, we know that j is the closest element 
+		
+	
+	Claim: Corner Case: Indices left after iterating all the elements in temperatures[]. These are the elements that have NO larger element to the right.
+		 Proof: Obvious
+			
 */	
 	
 #include <vector>
