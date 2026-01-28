@@ -1,3 +1,17 @@
+/*
+	max_rob[i] is the maximum cash that can be stolen with a rob pattern using houses {0, i}, and ending at house-i
+	Recurrence Relation (For linearly arranged houses): max_rob[i] = max ( max_rob[i-2], max[i-3] ) + nums[i]
+	
+	max_cash_to_rob = max(max_cash_0, max_cash_1);
+		The maximum possible robbed cash among the circularly located houses [0, n-1]  will be:
+		The max of (max robbed cash among the houses [0, n-2] , assuming they are linearly located, AND, 
+  		the max robbed cash among the houses [1, n-1] assuming they are linearly arranged )
+	
+	
+	REFER ONE NOTE FOR PROOF
+*/
+
+
 #include <vector>
 #include <algorithm>
 
@@ -63,7 +77,3 @@ int rob(vector<int>& nums)
 	
 	return max_cash_to_rob;
 }
-
-
-// max_rob[i] is the maximum cash that can be stolen from a rob pattern ending at house-i
-// Recurrence Relation: max_rob[i] = max ( max_rob[i-2], max_rob[i-3] ) + nums[i]
