@@ -42,17 +42,10 @@ double calc_num_hours_to_finish_piles(vector<int> &piles, int &speed)
 int minEatingSpeed(vector<int>& piles, int h) 
 {
 	int m = *max_element(piles.begin(), piles.end());	// Size of the biggest pile
-	
-	
-	// vector<int> speed_arr;
-	
-	// Create an array consisting of possible speed values [1, 2, 3, ......., m]
-	// Any speed value > m will surely not be answer. Because the biggest pile is m
-	// for ( int i = 1; i <= m; i++ )
-	// {
-	// 	speed_arr.push_back(i);	
-	// }
-	
+		
+	// Imagine an array consisting of possible speed values [1, 2, 3, ......., m]. Imagine We are performing binary search in this
+	// We do not actually create an array with these values, to save space
+	// Instead, we only use left, right indexes. The index middle = (left + right) / 2, will hold the value (middle + 1) in the array 
 	
 	int left = 0; 
 	int right = m-1;
@@ -66,7 +59,8 @@ int minEatingSpeed(vector<int>& piles, int h)
 		
 		double num_hours = calc_num_hours_to_finish_piles(piles, curr_speed);	// Use double for number of hours. There is overflow possibility
 		
-		// If with the curr_speed, the piles are finished in exactly 'h' hours, that means that is the answer for sure (Least possible speed for which all the piles are finished)
+		// You should NOT use the below if section: There could be multiple speed values that make the same num_hours. 
+			// If there is a lower speed that causes the same num_hours, that will be ignored, because this return will prematurely end the program
 		// if ( num_hours == h )
 		// {
 		// 	return curr_speed;
