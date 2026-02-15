@@ -27,9 +27,8 @@ int findMin(vector<int>& nums)
 		return nums[0];
 	}
 	
-	// While inflection point condition is not satisfied
-	//while ( ! ( ( (mid != 0) && nums[mid-1] > nums[mid]) && ( mid+1 > n-1 ) ) && ! ( ( ( (mid != 0) && nums[mid-1] > nums[mid] ) && ( nums[mid+1] > nums[mid] ) ) ) )	// The first condition before the OR is corner case. When the minimum element is the last element in nums[]. Also take care of left side overflow.
-	while ( ! ( ( ( !( mid-1 < 0) && nums[mid-1] > nums[mid] ) && ( ( mid + 1 > n-1 ) || ( nums[mid+1] > nums[mid] ) ) ) ) )	// Corner Cases: When the minimum element is the last element in nums[] (Right overflow) . Also left overflow.  
+	// Chcek if inflection point condition is satisfied
+	while ( ! ( ( ( !( mid-1 < 0) && nums[mid-1] > nums[mid] ) && ( ( mid + 1 > n-1 ) || ( nums[mid+1] > nums[mid] ) ) ) ) )	// Corner Cases: When the minimum element is the last element in nums[] (Right overflow) . Also check for left overflow.  
 	{
 		// The min element will be somwhere to the right of mid
 		if ( nums[mid] >= nums[0] )
