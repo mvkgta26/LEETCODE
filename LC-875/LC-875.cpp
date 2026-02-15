@@ -45,7 +45,7 @@ int minEatingSpeed(vector<int>& piles, int h)
 		
 	// Imagine an array consisting of possible speed values [1, 2, 3, ......., m]. Imagine We are performing binary search in this
 	// We do not actually create an array with these values, to save space
-	// Instead, we only use left, right indexes. The index middle = (left + right) / 2, will hold the value (middle + 1) in the array 
+	// Instead, we only use the indexes to find the actual values that would be in the array. The index middle = (left + right) / 2, will hold the value (middle + 1) in the array 
 	
 	int left = 0; 
 	int right = m-1;
