@@ -14,6 +14,10 @@ bool isNStraightHand(vector<int>& hand, int groupSize)
 		return false;
 	}
 	
+	// Corner Case
+	if ( groupSize == 1 )
+		return 1;
+	
 	// Hash all the elements of hand, and track the max element
 	map<int, int> hash;
 	int max_element = -1;
@@ -35,11 +39,10 @@ bool isNStraightHand(vector<int>& hand, int groupSize)
 	
 	// At any number i, the num_of_open_groups will represent the number of groups that require the number i+1
 	int num_of_open_groups = 0;
-	int num_of_groups_closed_by_i = 0;
+	int num_of_groups_closed_by_num = 0;
 	int prev_num = -1;
 	
-	// Iterate all the numbers from 0 to max_element in the hash map
-	//for (int i=0; i <= max_element; i++)
+	// Iterate all the numbers with non zero frequency from the hash map
 	int index = 0;	// Number of elements, with non zero freq, we have iterated so far in the map
 	for ( auto it = hash.begin(); it != hash.end(); it++ )
 	{	
@@ -58,20 +61,20 @@ bool isNStraightHand(vector<int>& hand, int groupSize)
 			return false;
 		}
 	
-
+		// From the que front, take the number of groups that are closed by the current number num, by the number ( num - group_size + 1 )
 		if ( index >= groupSize - 1 )
 		{
-			num_of_groups_closed_by_i = groups_to_close.front();	
+			num_of_groups_closed_by_num = groups_to_close.front();	
 			groups_to_close.pop();	
 		}
 		
 		
 		// New group start points: The excess value, hash[i] - num_of_opengroups , these numbers dont contribute to any prexisiting groups. So they have to be start of new groups
-		int num_of_new_groups_start_at_i = num - num_of_open_groups;
+		int num_of_new_groups_start_at_i = num_freq - num_of_open_groups;
 		
-		// Update the num_of_open_groups : Subtract the num_of_groups_closed_by_i, because these groups are closed by i, dont have to count them anymore
+		// Update the num_of_open_groups : Subtract the num_of_groups_closed_by_num, because these groups are closed by i, dont have to count them anymore
 		// Add num_of_new_groups_start_at_i to the exisiting number of open groups
-		num_of_open_groups = num_of_open_groups + num_of_new_groups_start_at_i - num_of_groups_closed_by_i;
+		num_of_open_groups = num_of_open_groups + num_of_new_groups_start_at_i - num_of_groups_closed_by_num;
 		
 		// Push to the groups_to_close que the num_of_new_groups_start_at_i. After groupSize number of iterations, this will be taken from the que front to denote how many groups to close at that point
 		groups_to_close.push(num_of_new_groups_start_at_i);
