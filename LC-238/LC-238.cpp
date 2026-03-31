@@ -7,7 +7,7 @@
 		
 	2 Loops: 
 		Loop-1: Place prefix product in out[i] 
-		Loop-2: Multiply postfix product into out[i], so that out[i] = prefix[i] * postfix[i]
+		Loop-2: Multiply postfix product into out[i], so that out[i] = prefix[i] * postfix[i]  (Note: You can maintain a separate postix array and multiply, but this is more space efficient)
 */
 
 
