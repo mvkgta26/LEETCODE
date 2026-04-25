@@ -48,6 +48,7 @@
         "ratio": "cpp",
         "unordered_map": "cpp",
         "__config": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "condition_variable": "cpp"
     }
 }
