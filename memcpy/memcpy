@@ -1,0 +1,35 @@
+#include <stddef.h>
+
+void *my_memcpy(void *dest, const void *src, size_t n)
+{
+	// Handle corner cases
+	
+	if (n == 0) 
+	{
+		return dest;
+	}
+
+	if (dest == NULL || src == NULL) 
+	{
+		return NULL;
+	}
+	
+	// Check if source and destination are same
+	if (dest == src) 
+	{
+		return dest;
+	}
+	
+	// 2. Convert to byte pointers
+	const unsigned char* s_ptr = ( const unsigned char* ) src; 	// Typecast the source pointer so that it is byte addressable
+	unsigned char* d_ptr = ( unsigned char* ) dest;	// Typecast the destination pointer so that it is byte addressable
+	
+	// 4. Copy bytes
+	for (size_t i=0; i<n; i++)
+	{
+		d_ptr[i] = s_ptr[i];
+	}
+
+	// 5. Return original destination pointer
+	return dest;
+}

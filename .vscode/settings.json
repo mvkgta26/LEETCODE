@@ -49,6 +49,7 @@
         "unordered_map": "cpp",
         "__config": "cpp",
         "utility": "cpp",
-        "condition_variable": "cpp"
+        "condition_variable": "cpp",
+        "memcpy": "cpp"
     }
 }
