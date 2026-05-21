@@ -1,4 +1,5 @@
 #include <vector>
+#include<unordered_map>
 
 using namespace std;
 
@@ -51,4 +52,12 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
 	delete targetNode;
 	
 	return head;
+	
+	
+	
+	
+	unordered_map<int, int> mp;
+	mp[nums[i]] = i; 
+	if ( mp.count(target - nums[i]) > 0 )
+
 }

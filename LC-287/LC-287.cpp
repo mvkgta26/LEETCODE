@@ -16,7 +16,7 @@
 			That is: The node at address 'i' points to the next node at address nums[i]
 			
 			Floyd tortoise-hare algorithm:
-				Phase-1: Find if 2 nodes coincide with fast and slow.
+				Phase-1: Find if 2 nodes coincide with fast and slow pointers.
 				Phase-2 (Cycle entry point detection): Reset slow = 0, head of the linked list. Continue fast from the saved state. Fast should now move at same speed as slow.
 														The meeting point node now is the cycle entry point, which is the repeated number. 
 
