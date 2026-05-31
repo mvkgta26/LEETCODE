@@ -11,6 +11,7 @@ int getSum(int a, int b)
 	int ci = 0;
 	int sum = 0;
 	
+	// NOTE: With 2s complement representation, even adding negative numbers, you can do just like normal add
 	// Iterate 31 bits from LSB to MSB, leaving out the 31st bit (sign bit)
 	//for (int i=0; i<11; i++)
 	for (int i=0; i<32; i++)
