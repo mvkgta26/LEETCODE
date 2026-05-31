@@ -75,7 +75,9 @@ bool parsePacketHeader(const uint8_t* buffer,
 		So you take the 2 bytes from the packet, convert it to rvlaue representation (LSB --> MSB : Right to Left)
 		Store this rvalue in a struct variable. The CPU will take care of storing this rvalue in the struct variable in whatever endianness it uses (we do not know). 
 		header.payload_length = (static_cast<uint16_t>( *buffer_ptr )) << 8 | static_cast<uint16_t> ( *(buffer_ptr+1) ); 
-		*/   
+		NOTE: Endianness only applies to memory. For registers, there is no endianness. A 32 byte integer gets stored in a 32 byte register.
+				rvalues get stored in registers and processed from there, they dont get stored in memory usually.
+	*/   
 	buffer_ptr = buffer_ptr + 2;	// update the buffer_ptr
 	
 	// 6. Parse sequence number
